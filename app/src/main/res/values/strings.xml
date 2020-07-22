@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SimpleTodo</string>
-    <string name="add_item_view">Add item view</string>
-    <string name="design_basic_view">Design basic view</string>
-    <string name="start_android_application">Start Android application</string>
+    <string name="update_the_item">Update the item</string>
+    <string name="update">Update</string>
+    <string name="update_item">Update item</string>
+    <string name="to_do_items">To-Do Items</string>
 </resources>
