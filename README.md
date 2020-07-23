@@ -10,18 +10,18 @@ Time spent: **7** hours spent in total
 
 The following **required** functionality is completed:
 
-* [ ] User can **view a list of todo items**
-* [ ] User can **successfully add and remove items** from the todo list
-* [ ] User's **list of items persisted** upon modification and and retrieved properly on app restart
+* [x] User can **view a list of todo items**
+* [x] User can **successfully add and remove items** from the todo list
+* [x] User's **list of items persisted** upon modification and and retrieved properly on app restart
 
 The following **optional** features are implemented:
 
-* [ ] User can **tap a todo item in the list and bring up an edit screen for the todo item** and then have any changes to the text reflected in the todo list
-* [ ] Implemented **DividerItemDeocration to tweak the UI and add separators** between rows
+* [x] User can **tap a todo item in the list and bring up an edit screen for the todo item** and then have any changes to the text reflected in the todo list
+* [x] Implemented **DividerItemDeocration to tweak the UI and add separators** between rows
 
 The following **additional** features are implemented:
 
-* [ ] User can **swipe left or right to delete** any todo item
+* [x] User can **swipe left or right to delete** any todo item
 
 ## Video Walkthrough
 
@@ -33,7 +33,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-* It took sometime to understand the concepts of Activity & RecyclerView. But, after some time when you understand the concepts, it became easy .
+* It took sometime to understand the concepts of Activity & RecyclerView. But, after some time when you understand the concepts, it became easy.
 
 ## License
 
