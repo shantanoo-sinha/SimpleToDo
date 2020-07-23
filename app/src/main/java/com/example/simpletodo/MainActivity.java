@@ -1,10 +1,5 @@
 package com.example.simpletodo;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.apache.commons.io.FileUtils;
 
@@ -44,8 +46,11 @@ public class MainActivity extends AppCompatActivity {
         // Loading todo items from the data file
         loadToDoItems();
 
+        // Custom RecycleView Divider
+        rvItems.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(getApplicationContext(), R.drawable.item_decorator)));
+
         // Set focus on the edit text box
-        etItem.requestFocus();
+        //etItem.requestFocus();
 
         ItemsAdapter.OnClickListener onClickListener = new ItemsAdapter.OnClickListener() {
             @Override
@@ -84,8 +89,12 @@ public class MainActivity extends AppCompatActivity {
         };
 
         itemsAdapter = new ItemsAdapter(items, onClickListener, longClickListener);
+
+        rvItems.setHasFixedSize(true);
         rvItems.setAdapter(itemsAdapter);
-        rvItems.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvItems.setLayoutManager(linearLayoutManager);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 items.add(toDoItem);
 
                 // Notify the Items adapter about the added item
-                itemsAdapter.notifyItemInserted(items.size()-1);
+                itemsAdapter.notifyItemInserted(items.size() - 1);
 
                 // Clear the text box
                 etItem.setText("");
@@ -109,6 +118,35 @@ public class MainActivity extends AppCompatActivity {
                 saveToDoItems();
             }
         });
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                if (direction == ItemTouchHelper.LEFT || direction == ItemTouchHelper.RIGHT) {
+                    int position = viewHolder.getAdapterPosition();
+                    Log.d("MainActivity", "Swipe at position " + position);
+
+                    // Delete the item from the data model
+                    items.remove(position);
+
+                    // Notify the Items adapter
+                    itemsAdapter.notifyItemRemoved(position);
+
+                    // Show message
+                    Toast.makeText(getApplicationContext(), "To-Do item removed", Toast.LENGTH_SHORT).show();
+
+                    // Saving todo items to the data file
+                    saveToDoItems();
+                }
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(rvItems);
     }
 
     @Override

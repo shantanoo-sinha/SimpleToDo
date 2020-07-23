@@ -12,14 +12,6 @@ import java.util.List;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
 
-    public interface OnClickListener {
-        void onItemClicked(int position);
-    }
-
-    public interface OnLongClickListener {
-        void onItemLongClicked(int position);
-    }
-
     private List<String> items;
     private OnClickListener onClickListener;
     private OnLongClickListener longClickListener;
@@ -54,6 +46,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public interface OnClickListener {
+        void onItemClicked(int position);
+    }
+
+    public interface OnLongClickListener {
+        void onItemLongClicked(int position);
     }
 
     // Container to access each item in the list of items
